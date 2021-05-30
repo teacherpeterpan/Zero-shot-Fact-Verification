@@ -29,4 +29,21 @@ This repository contains code and models for the paper: [Zero-shot Fact Verifica
 - nltk 3.5
 - scikit-learn 0.23.2
 
+## Reference
+Please cite the paper in the following format if you use this dataset during your research.
+
+```
+@inproceedings{pan-etal-2021-Zero-shot-FV,
+  title={Zero-shot Fact Verification by Claim Generation},
+  author={Liangming Pan, Wenhu Chen, Wenhan Xiong, Min-Yen Kan, William Yang Wang},
+  booktitle = {The Joint Conference of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (ACL-IJCNLP 2021)},
+  address = {Online},
+  month = {August},
+  year = {2021}
+}
+```
+
+## Q&A
+If you encounter any problem, please either directly contact the first author or leave an issue in the github repo.
+
 
