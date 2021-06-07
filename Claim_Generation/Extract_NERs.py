@@ -33,17 +33,14 @@ if __name__ == "__main__":
     # input files
     parser.add_argument(
         '--train_path',
-        default='/mnt/edward/data/liangming/Projects/FactChecking/FEVER/processed/train_nli.processed.json',
         type=str, help='path of the FEVER train dataset')
 
     parser.add_argument(
         '--dev_path',
-        default='/mnt/edward/data/liangming/Projects/FactChecking/FEVER/processed/dev_nli.processed.json',
         type=str, help='path of the FEVER dev dataset')
 
     parser.add_argument(
         '--save_path',
-        default='./data/entity_dict_dev.json',
         type=str, help='path of the entity dict')
 
     entity_extraction_for_FEVER(parser.parse_args())

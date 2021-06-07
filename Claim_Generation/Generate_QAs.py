@@ -18,7 +18,7 @@ import argparse
 from tqdm import tqdm
 
 # QG NLP object
-gpu_index = 3
+gpu_index = 0
 
 print('Loading QG module >>>>>>>>')
 qg_nlp = pipeline("question-generation", model='valhalla/t5-base-qg-hl', qg_format="highlight", gpu_index = gpu_index)
@@ -26,8 +26,7 @@ print('QG module loaded.')
 
 def generate_QA_pairs(args):
     FEVER = FEVER_Dataset(args)
-    # all_samples = FEVER.FEVER_train
-    all_samples = FEVER.FEVER_dev
+    all_samples = FEVER.FEVER_train if args.data_split == 'train' else FEVER.FEVER_dev
 
     # load entity dict
     with open(args.entity_dict, 'r') as f:
@@ -76,22 +75,22 @@ if __name__ == "__main__":
     # input files
     parser.add_argument(
         '--train_path',
-        default='/mnt/edward/data/liangming/Projects/FactChecking/FEVER/processed/train_nli.processed.json',
         type=str, help='path of the FEVER train dataset')
 
     parser.add_argument(
         '--dev_path',
-        default='/mnt/edward/data/liangming/Projects/FactChecking/FEVER/processed/dev_nli.processed.json',
         type=str, help='path of the FEVER dev dataset')
 
     parser.add_argument(
+        '--data_split',
+        type=str, help='data split to process')
+
+    parser.add_argument(
         '--entity_dict',
-        default='./data/entity_dict_dev.json',
         type=str, help='path of the entity dict')
 
     parser.add_argument(
         '--save_path',
-        default='./data/precompute_QAs_dev.json',
         type=str, help='path to save the QG result')
 
     generate_QA_pairs(parser.parse_args())

@@ -358,7 +358,7 @@ if __name__ == "__main__":
     test_passage_hl = '''PERSON (born <hl> 19 January 1980 <hl> ) is a British racing driver and former Formula One driver. 
     He won the 2009 Formula One World Championship, driving for Brawn GP.'''
 
-    nlp = pipeline("question-generation", model='valhalla/t5-base-qg-hl', qg_format="highlight")
+    nlp = pipeline("question-generation", model='valhalla/t5-base-qg-hl', qg_format="highlight", gpu_index=6)
     #print(nlp.qg_without_answer(test_passage))
     #print(nlp.qg_with_answer_text(test_passage, "19 January 1980"))
     print(nlp.qg_with_answer_hl(test_passage_hl))

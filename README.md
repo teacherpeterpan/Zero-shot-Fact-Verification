@@ -66,7 +66,7 @@ One data sample is as follows:
 
 Given a piece of evidence in FEVER, we generate three different types of claims: SUPPORTED, REFUTED, and NEI. The codes are in `Claim_Generation` folder. 
 
-### Pre-Processing
+### a) NER Extraction
 
 First, we extract all Name Entities (NERs) in the evidence. 
 
@@ -79,7 +79,29 @@ python Extract_NERs.py \
     --save_path ../output/intermediate/
 ```
 
+### b) Question Generation
 
+Then, we generate (question, answer) pairs from the evidence given an named entity as the answer. 
+
+For question generator, we use the pretrained QG model from [patil-suraj](https://github.com/patil-suraj/question_generation), a Google T5 model finetuned on the SQuAD 1.1 dataset. Given an input text *D* and an answer *A*, the question generator outputs a question *Q*. 
+
+Run the following codes to generate (Q,A) pairs for the entire FEVER dataset. 
+
+```shell
+python Generate_QAs.py \
+    --train_path ../data/fever_train.processed.json \
+    --dev_path ../data/fever_dev.processed.json \
+    --data_split train \
+    --entity_dict ../output/intermediate/entity_dict_train.json \
+    --save_path ../output/intermediate/precompute_QAs_train.json
+
+python Generate_QAs.py \
+    --train_path ../data/fever_train.processed.json \
+    --dev_path ../data/fever_dev.processed.json \
+    --data_split dev \
+    --entity_dict ../output/intermediate/entity_dict_dev.json \
+    --save_path ../output/intermediate/precompute_QAs_dev.json
+```
 
 ## Zero-shot Fact Verification
 
