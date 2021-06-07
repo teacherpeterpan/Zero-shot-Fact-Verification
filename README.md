@@ -31,12 +31,44 @@ This repository contains code and models for the paper: [Zero-shot Fact Verifica
 
 ## Data Preparation
 
+The data used in our paper is constructed based on the original [FEVER dataset](https://fever.ai/resources.html). We use the gold evidence sentences in FEVER for the SUPPORTED and REFUTED claims. We collect evidence sentences for the NEI class using the retrival method proposed in [**the Papelo system from FEVER'2018**](https://github.com/cdmalon/fever2018-retrieval). The detailed data processing process is introduced [here](./data_processing.md). 
+
 Our processed dataset is publicly available in the Google Cloud Storage: [https://storage.cloud.google.com/few-shot-fact-verification/](https://storage.cloud.google.com/few-shot-fact-verification/)
 
-You could download them to the `data` forder using `gsutil`:
+You could download them to the `data` folder using `gsutil`:
 ```shell
 gsutil cp gs://few-shot-fact-verification/* ./data/
 ```
+
+There are two files in the folder:
+- `fever_train.processed.json`
+- `fever_dev.processed.json`
+
+One data sample is as follows: 
+
+```json
+{
+    "id": 22846,
+    "context": "Penguin Books was founded in 1935 by Sir Allen Lane as a line of the publishers The Bodley Head , only becoming a separate company the following year .",
+    "ori_evidence": [
+      [
+        "Penguin_Books",
+        1,
+        "It was founded in 1935 by Sir Allen Lane as a line of the publishers The Bodley Head , only becoming a separate company the following year ."
+      ]
+    ],
+    "claim": "Penguin Books is a publishing house founded in 1930.",
+    "label": "REFUTES"
+}
+```
+
+## Claim Generation
+
+Coming Soon...
+
+## Zero-shot Fact Verification
+
+Coming Soon...
 
 ## Reference
 Please cite the paper in the following format if you use this dataset during your research.
