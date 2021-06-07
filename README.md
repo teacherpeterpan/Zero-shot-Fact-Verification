@@ -29,6 +29,15 @@ This repository contains code and models for the paper: [Zero-shot Fact Verifica
 - nltk 3.5
 - scikit-learn 0.23.2
 
+## Data Preparation
+
+Our processed dataset is publicly available in the Google Cloud Storage: [https://storage.cloud.google.com/few-shot-fact-verification/](https://storage.cloud.google.com/few-shot-fact-verification/)
+
+You could download them to the `data` forder using `gsutil`:
+```shell
+gsutil cp gs://few-shot-fact-verification/* ./data/
+```
+
 ## Reference
 Please cite the paper in the following format if you use this dataset during your research.
 
