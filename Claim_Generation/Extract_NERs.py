@@ -10,18 +10,20 @@ stanza_nlp = stanza.Pipeline('en', use_gpu = True)
 
 def entity_extraction_for_FEVER(args):
     FEVER = FEVER_Dataset(args)
-    # all_samples = FEVER.FEVER_train
-    all_samples = FEVER.FEVER_dev
 
-    entity_dict = {}
-    for sample in tqdm(all_samples):
-        texts = sample['context']
-        pass_doc = stanza_nlp(texts)
-        passage_entities = [(ent.text, ent.type) for ent in pass_doc.ents]
-        entity_dict[sample['id']] = passage_entities
+    splits = ['train', 'dev']
+    for split in splits:
+        print(f'Extracting NERs for {split} set of FEVER...')
+        all_samples = FEVER.FEVER_train if split == 'train' else FEVER.FEVER_dev
+        entity_dict = {}
+        for sample in tqdm(all_samples):
+            texts = sample['context']
+            pass_doc = stanza_nlp(texts)
+            passage_entities = [(ent.text, ent.type) for ent in pass_doc.ents]
+            entity_dict[sample['id']] = passage_entities
 
-    with open(args.save_path, 'w') as f:
-       f.write(json.dumps(entity_dict, indent=2))
+        with open(args.save_path + f'entity_dict_{split}.json', 'w') as f:
+            f.write(json.dumps(entity_dict, indent=2))
 
 
 if __name__ == "__main__":

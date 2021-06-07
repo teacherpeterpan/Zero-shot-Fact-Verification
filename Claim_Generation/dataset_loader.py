@@ -10,9 +10,9 @@ class FEVER_Dataset():
         print('Loading FEVER >>>>>>>>')
         # load data
         with open(config.train_path, 'r') as f:
-            self.FEVER_train = json.load(f)
+            self.FEVER_train = json.load(f)[:100]
         with open(config.dev_path, 'r') as f:
-            self.FEVER_dev = json.load(f)
+            self.FEVER_dev = json.load(f)[:100]
 
         print('Data loaded. ')
         print('Number of train examples: {}'.format(len(self.FEVER_train)))

@@ -64,7 +64,22 @@ One data sample is as follows:
 
 ## Claim Generation
 
-Coming Soon...
+Given a piece of evidence in FEVER, we generate three different types of claims: SUPPORTED, REFUTED, and NEI. The codes are in `Claim_Generation` folder. 
+
+### Pre-Processing
+
+First, we extract all Name Entities (NERs) in the evidence. 
+
+```shell
+mkdir -p ../output/intermediate/
+
+python Extract_NERs.py \
+    --train_path ../data/fever_train.processed.json \
+    --dev_path ../data/fever_dev.processed.json \
+    --save_path ../output/intermediate/
+```
+
+
 
 ## Zero-shot Fact Verification
 

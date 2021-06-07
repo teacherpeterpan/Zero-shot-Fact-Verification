@@ -1,7 +1,7 @@
 
 python Claim_Generation.py \
-    --train_path /mnt/edward/data/liangming/Projects/FactChecking/FEVER/processed/train_nli.processed.json \
-    --dev_path /mnt/edward/data/liangming/Projects/FactChecking/FEVER/processed/dev_nli.processed.json \
+    --train_path ../data/fever_train.processed.json \
+    --dev_path ../data/fever_train.processed.json \
     --entity_dict ./data/entity_dict.json \
     --QA_path ./data/precompute_QAs.json \
     --QA2D_model_path ../QA2D/outputs/best_model \
