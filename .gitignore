@@ -9,6 +9,7 @@ __pycache__/
 # Dataset
 data/*.json
 output/*
+dependencies/*
 
 # Distribution / packaging
 .Python

@@ -28,16 +28,17 @@ This repository contains code and models for the paper: [Zero-shot Fact Verifica
 - stanza 1.1.1
 - nltk 3.5
 - scikit-learn 0.23.2
+- sense2vec
 
 ## Data Preparation
 
 The data used in our paper is constructed based on the original [FEVER dataset](https://fever.ai/resources.html). We use the gold evidence sentences in FEVER for the SUPPORTED and REFUTED claims. We collect evidence sentences for the NEI class using the retrival method proposed in [**the Papelo system from FEVER'2018**](https://github.com/cdmalon/fever2018-retrieval). The detailed data processing process is introduced [here](./data_processing.md). 
 
-Our processed dataset is publicly available in the Google Cloud Storage: [https://storage.cloud.google.com/few-shot-fact-verification/](https://storage.cloud.google.com/few-shot-fact-verification/)
+Our processed dataset is publicly available in the Google Cloud Storage: [https://storage.cloud.google.com/few-shot-fact-verification/data/](https://storage.cloud.google.com/few-shot-fact-verification/data/)
 
 You could download them to the `data` folder using `gsutil`:
 ```shell
-gsutil cp gs://few-shot-fact-verification/* ./data/
+gsutil cp gs://few-shot-fact-verification/data/* ./data/
 ```
 
 There are two files in the folder:
@@ -102,6 +103,33 @@ python Generate_QAs.py \
     --entity_dict ../output/intermediate/entity_dict_dev.json \
     --save_path ../output/intermediate/precompute_QAs_dev.json
 ```
+
+### c) Claim Generation
+
+We use the pretrained [Sense2Vec (Trask et. al, 2015)](https://github.com/explosion/sense2vec) to find answer replacements for generating REFUTED claims. The pretrained model can be downloaded [here](https://github.com/explosion/sense2vec/releases/download/v1.0.0/s2v_reddit_2015_md.tar.gz). Download the model and unzip it to the `./dependencies/` folder. 
+
+Then, download the pretrained QA2D model from the Google Cloud [here](https://storage.cloud.google.com/few-shot-fact-verification/QA2D/). You could download them to the `QA2D` folder using `gsutil`:
+
+```shell
+gsutil cp gs://few-shot-fact-verification/QA2D/* ./dependencies/QA2D/
+```
+
+Finally, run `generate_claim.sh` to generate claims from FEVER. Here is the example of generating NEI claims from the FEVER dev set. 
+
+```shell
+python Claim_Generation.py \
+    --train_path ../data/fever_train.processed.json \
+    --dev_path ../data/fever_train.processed.json \
+    --entity_dict ../output/intermediate/entity_dict_train.json \
+    --QA_path ../output/intermediate/precompute_QAs_train.json \
+    --QA2D_model_path ../dependencies/QA2D_model \
+    --sense_to_vec_path ../dependencies/s2v_old \
+    --save_path ../output/NEI_claims.json \
+    --range_start 0 \
+    --range_end -1 \
+    --claim_type NEI
+```
+
 
 ## Zero-shot Fact Verification
 
