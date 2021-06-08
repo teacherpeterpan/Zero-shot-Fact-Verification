@@ -34,7 +34,7 @@ This repository contains code and models for the paper: [Zero-shot Fact Verifica
 
 The data used in our paper is constructed based on the original [FEVER dataset](https://fever.ai/resources.html). We use the gold evidence sentences in FEVER for the SUPPORTED and REFUTED claims. We collect evidence sentences for the NEI class using the retrival method proposed in [**the Papelo system from FEVER'2018**](https://github.com/cdmalon/fever2018-retrieval). The detailed data processing process is introduced [here](./data_processing.md). 
 
-Our processed dataset is publicly available in the Google Cloud Storage: [https://storage.cloud.google.com/few-shot-fact-verification/data/](https://storage.cloud.google.com/few-shot-fact-verification/data/)
+Our processed dataset is publicly available in the Google Cloud Storage: [https://storage.cloud.google.com/few-shot-fact-verification/](https://storage.cloud.google.com/few-shot-fact-verification/)
 
 You could download them to the `data` folder using `gsutil`:
 ```shell
@@ -108,7 +108,7 @@ python Generate_QAs.py \
 
 We use the pretrained [Sense2Vec (Trask et. al, 2015)](https://github.com/explosion/sense2vec) to find answer replacements for generating REFUTED claims. The pretrained model can be downloaded [here](https://github.com/explosion/sense2vec/releases/download/v1.0.0/s2v_reddit_2015_md.tar.gz). Download the model and unzip it to the `./dependencies/` folder. 
 
-Then, download the pretrained QA2D model from the Google Cloud [here](https://storage.cloud.google.com/few-shot-fact-verification/QA2D/). You could download them to the `QA2D` folder using `gsutil`:
+Then, download the pretrained QA2D model from the Google Cloud [here](https://storage.cloud.google.com/few-shot-fact-verification/). You could download them to the `QA2D` folder using `gsutil`:
 
 ```shell
 gsutil cp gs://few-shot-fact-verification/QA2D/* ./dependencies/QA2D/
