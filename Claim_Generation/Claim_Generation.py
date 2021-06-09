@@ -38,8 +38,7 @@ class ClaimGenerator():
         # Load fever data
         print('Loading FEVER dataset >>>>>>>>')
         FEVER = FEVER_Dataset(config)
-        self.fever_dataset = FEVER.FEVER_train
-        # self.fever_dataset = FEVER.FEVER_dev
+        self.fever_dataset = FEVER.FEVER_train if config.split == 'train' else FEVER.FEVER_dev
 
         # load entity dict
         print('Loading entity dict >>>>>>>>')
@@ -431,11 +430,11 @@ class ClaimGenerator():
         for fever_sample in tqdm(self.fever_dataset[data_range_start: data_range_end]):
             sample_list = None
             # claim generation
-            if self.claim_type == 'SUPPORT':
+            if self.claim_type == 'SUPPORTED':
                 sample_list = self.generate_support_claims(fever_sample)
-            elif self.claim_type == 'REFUTE_LOCAL':
+            elif self.claim_type == 'REFUTED_LOCAL':
                 sample_list = self.generate_refute_local_claims(fever_sample)
-            elif self.claim_type == 'REFUTE_GLOBAL':
+            elif self.claim_type == 'REFUTED':
                 sample_list = self.generate_refute_global_claims(fever_sample)
             elif self.claim_type == 'NEI':
                 sample_list = self.generate_NEI_claims(fever_sample)
@@ -451,35 +450,33 @@ if __name__ == "__main__":
     # parser used to read argument
     parser = argparse.ArgumentParser(description='ClaimGeneration')
 
-    # input files
+    # parameters
+    parser.add_argument(
+        '--split',
+        type=str, help='data split')
+    
     parser.add_argument(
         '--train_path',
-        default='/mnt/edward/data/liangming/Projects/FactChecking/FEVER/processed/train_nli.processed.json',
         type=str, help='path of the FEVER train dataset')
 
     parser.add_argument(
         '--dev_path',
-        default='/mnt/edward/data/liangming/Projects/FactChecking/FEVER/processed/dev_nli.processed.json',
         type=str, help='path of the FEVER dev dataset')
 
     parser.add_argument(
-        '--wiki_path', 
-        default='/mnt/edward/data/liangming/Projects/FactChecking/FEVER/wiki-pages/',
+        '--wiki_path',
         type=str, help='path to wikipedia database')
 
     parser.add_argument(
         '--entity_dict',
-        default='./data/entity_dict.json',
         type=str, help='path of the entity dict')
 
     parser.add_argument(
         '--QA_path', 
-        default='./data/precompute_QAs.json',
         type=str, help='path to save the precomputed QAs')
 
     parser.add_argument(
-        '--QA2D_model_path', 
-        default='../QA2D/outputs/best_model',
+        '--QA2D_model_path',
         type=str, help='path to the pretrained QA2D model')
 
     parser.add_argument(
@@ -488,8 +485,7 @@ if __name__ == "__main__":
         type=str, help='path to the pretrained sense2vec model')
 
     parser.add_argument(
-        '--save_path',
-        default='../New_Results/fast_NEI.json', 
+        '--save_path', 
         type=str, help='path to save the generated claims')
 
     parser.add_argument(

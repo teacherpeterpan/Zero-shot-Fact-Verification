@@ -114,10 +114,56 @@ Then, download the pretrained QA2D model from the Google Cloud [here](https://st
 gsutil cp gs://few-shot-fact-verification/QA2D/* ./dependencies/QA2D/
 ```
 
-Finally, run `generate_claim.sh` to generate claims from FEVER. Here is the example of generating NEI claims from the FEVER dev set. 
+Finally, run `Claim_Generation.py` to generate claims from FEVER. 
+
+#### SUPPORTED Claims
+
+Here is the example of generating SUPPORTED claims from the FEVER train set. 
 
 ```shell
 python Claim_Generation.py \
+    --split train \
+    --train_path ../data/fever_train.processed.json \
+    --dev_path ../data/fever_train.processed.json \
+    --entity_dict ../output/intermediate/entity_dict_train.json \
+    --QA_path ../output/intermediate/precompute_QAs_train.json \
+    --QA2D_model_path ../dependencies/QA2D_model \
+    --sense_to_vec_path ../dependencies/s2v_old \
+    --save_path ../output/SUPPORTED_claims.json \
+    --claim_type SUPPORTED
+```
+
+#### REFUTED Claims
+
+Here is the example of generating REFUTED claims from the FEVER train set. 
+
+```shell
+python Claim_Generation.py \
+    --split train \
+    --train_path ../data/fever_train.processed.json \
+    --dev_path ../data/fever_train.processed.json \
+    --entity_dict ../output/intermediate/entity_dict_train.json \
+    --QA_path ../output/intermediate/precompute_QAs_train.json \
+    --QA2D_model_path ../dependencies/QA2D_model \
+    --sense_to_vec_path ../dependencies/s2v_old \
+    --save_path ../output/REFUTED_claims.json \
+    --claim_type REFUTED
+```
+
+#### NEI Claims
+
+Because generating NEI claims require additional contexts, we need access to the wikipedia dump associated with FEVER. The wiki dump can be downloaded with the following scripts:
+
+```shell
+wget https://s3-eu-west-1.amazonaws.com/fever.public/wiki-pages.zip
+unzip wiki-pages.zip -d ./data
+```
+
+Here is the example of generating NEI claims from the FEVER train set. 
+
+```shell
+python Claim_Generation.py \
+    --split train \
     --train_path ../data/fever_train.processed.json \
     --dev_path ../data/fever_train.processed.json \
     --entity_dict ../output/intermediate/entity_dict_train.json \
@@ -125,15 +171,15 @@ python Claim_Generation.py \
     --QA2D_model_path ../dependencies/QA2D_model \
     --sense_to_vec_path ../dependencies/s2v_old \
     --save_path ../output/NEI_claims.json \
-    --range_start 0 \
-    --range_end -1 \
-    --claim_type NEI
+    --claim_type NEI \
+    --wiki_path ../data/wiki-pages/
 ```
-
 
 ## Zero-shot Fact Verification
 
-Coming Soon...
+The full set of our generated claims are in the `generated_claims` folder of our Google Cloud [here](https://storage.cloud.google.com/few-shot-fact-verification/). 
+
+
 
 ## Reference
 Please cite the paper in the following format if you use this dataset during your research.
