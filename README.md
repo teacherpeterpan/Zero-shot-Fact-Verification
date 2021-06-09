@@ -177,9 +177,35 @@ python Claim_Generation.py \
 
 ## Zero-shot Fact Verification
 
-The full set of our generated claims are in the `generated_claims` folder of our Google Cloud [here](https://storage.cloud.google.com/few-shot-fact-verification/). 
+The full set of our generated claims are in the `generated_claims` folder of our Google Cloud [here](https://storage.cloud.google.com/few-shot-fact-verification/). Put the json file of generated claims into the `data` folder. 
 
+> Our codes are adapted from [https://github.com/hover-nlp/hover](https://github.com/hover-nlp/hover), which requires the version of `transformers==2.6.0`. 
 
+In `./Fact_Verification`, run `train.sh` to train the Roberta-large fact verification model using the generated data. The scripts are as follows. 
+
+```shell
+python3 run_hover.py \
+    --model_type roberta \
+    --model_name_or_path roberta-large \
+    --do_train \
+    --do_lower_case \
+    --per_gpu_train_batch_size 16 \
+    --learning_rate 1e-5 \
+    --num_train_epochs 5.0 \
+    --evaluate_during_training \
+    --max_seq_length 200  \
+    --max_query_length 60 \
+    --gradient_accumulation_steps 2  \
+    --max_steps 20000 \
+    --save_steps 1000 \
+    --logging_steps 1000 \
+    --overwrite_cache \
+    --num_labels 3 \
+    --data_dir ../data/ \
+    --train_file fever_generated_claims.json \
+    --predict_file fever_dev.processed.json \
+    --output_dir ./output/roberta_zero_shot \
+```
 
 ## Reference
 Please cite the paper in the following format if you use this dataset during your research.

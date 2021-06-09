@@ -10,6 +10,8 @@ __pycache__/
 data/*.json
 output/*
 dependencies/*
+Fact_Verification/cache/*
+Fact_Verification/output/*
 
 # Distribution / packaging
 .Python
