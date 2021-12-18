@@ -111,7 +111,7 @@ We use the pretrained [Sense2Vec (Trask et. al, 2015)](https://github.com/explos
 Then, download the pretrained QA2D model from the Google Cloud [here](https://storage.cloud.google.com/few-shot-fact-verification/). You could download them to the `QA2D` folder using `gsutil`:
 
 ```shell
-gsutil cp gs://few-shot-fact-verification/QA2D/* ./dependencies/QA2D/
+gsutil cp gs://few-shot-fact-verification/QA2D_model/* ./dependencies/QA2D_model/
 ```
 
 Finally, run `Claim_Generation.py` to generate claims from FEVER. 
